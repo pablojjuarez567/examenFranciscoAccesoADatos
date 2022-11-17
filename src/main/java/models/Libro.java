@@ -7,6 +7,10 @@ public class Libro implements Serializable {
     private String titulo;
     private String autor;
 
+    /*
+    Completar con los métodos y atributos que sean necesarios
+    */    
+    
     public Libro() {
     }
 
@@ -44,5 +48,7 @@ public class Libro implements Serializable {
         return "Libro{" + "id=" + id + ", titulo=" + titulo + ", autor=" + autor + '}';
     }
     
+    
+
     
 }

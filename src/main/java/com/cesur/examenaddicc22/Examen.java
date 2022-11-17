@@ -2,10 +2,12 @@ package com.cesur.examenaddicc22;
 
 /**
  *
- * @author FranciscoRomeroGuill
+ * @author AQUI VUESTROS DATOS
  */
 public class Examen {
 
+    /* Incluid aqui vuestros datos */
+    
     static final String AUTOR = "TU NOMBRE AQUI";
     static final String DNI = "TI DNI AQUI";
     

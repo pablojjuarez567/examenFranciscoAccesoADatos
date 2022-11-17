@@ -1,7 +1,6 @@
 package dao;
 
-import java.util.ArrayList;
-import models.Ejemplar;
+import java.util.HashSet;
 import models.Libro;
 import org.hibernate.SessionFactory;
 
@@ -33,7 +32,18 @@ public class BibliotecaDAO {
         System.out.println("Método saveLibro no implementado");
         
     }
-    
+  
+    public HashSet<Libro> findByEstado(String estado){
+        
+        HashSet<Libro> salida = null;
+        /* 
+         Devuelve el conjunto de libros que tenga el estado indicado      
+        */
+        System.out.println("Método printInfo no implementado");
+        
+        return salida;
+        
+    }
     
     public void printInfo(){
         

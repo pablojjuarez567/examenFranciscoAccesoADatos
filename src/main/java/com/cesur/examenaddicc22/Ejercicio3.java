@@ -1,6 +1,7 @@
 package com.cesur.examenaddicc22;
 
 import dao.BibliotecaDAO;
+import java.util.HashSet;
 import models.Ejemplar;
 import models.Libro;
 
@@ -35,11 +36,14 @@ class Ejercicio3 {
         
         /* aqui faltaría asociar los ejemplares a este libro */
         
-        daoh.saveLibro(libro);
-        
+        daoh.saveLibro(libro);        
         daoh.printInfo();
         
+        System.out.println("\nEstos son los libros que tienen algun ejemplar en buen estado");
         
+        HashSet<Libro> salida = daoh.findByEstado("bueno");
+        if(salida!=null) salida.forEach( (e)->{ System.out.println(e.getTitulo()); } );
+                
         
     }
     
