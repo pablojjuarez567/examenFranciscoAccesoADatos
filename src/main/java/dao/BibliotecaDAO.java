@@ -35,11 +35,11 @@ public class BibliotecaDAO {
   
     public HashSet<Libro> findByEstado(String estado){
         
-        HashSet<Libro> salida = null;
+        HashSet<Libro> salida = new HashSet<Libro>();
         /* 
          Devuelve el conjunto de libros que tenga el estado indicado      
         */
-        System.out.println("Método printInfo no implementado");
+        System.out.println("Método findByEstado no implementado");
         
         return salida;
         
