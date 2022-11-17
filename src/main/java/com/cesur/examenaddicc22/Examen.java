@@ -14,7 +14,7 @@ public class Examen {
     public static void main(String[] args) {
         System.out.println("-------------------------------------------");
         System.out.println("EXAMEN ACCESO A DATOS");
-        System.out.println("Diciembre 2021");
+        System.out.println("Diciembre 2022");
         System.out.println("Alumno: " + AUTOR);
         System.out.println("DNI: "+DNI);
         System.out.println("-------------------------------------------\n");
