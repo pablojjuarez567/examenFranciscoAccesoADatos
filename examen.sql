@@ -11,7 +11,8 @@
 CREATE TABLE `ejemplar` (
   `id` int(11) NOT NULL,
   `estado` varchar(16) NOT NULL,
-  `edicion` int(11) NOT NULL
+  `edicion` int(11) NOT NULL,
+  `libro_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
