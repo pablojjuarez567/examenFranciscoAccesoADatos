@@ -48,10 +48,10 @@ public class BibliotecaDAO {
     public void printInfo(){
         
         /* 
-          Muestra por pantalla todos los libros de la biblioteca y el número
+          Muestra por consola todos los libros de la biblioteca y el número
           de ejemplares disponibles de cada uno.
           
-          Un ejemplo de salida es:
+          Debe imprimirlo de esta manera:
         
           Biblioteca
           ----------
