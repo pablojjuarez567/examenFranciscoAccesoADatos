@@ -35,13 +35,8 @@ public class BibliotecaDAO {
             Transaction t = s.beginTransaction();
             s.persist(libro);
             t.commit();
-            close();
         } catch (HibernateException e) {
             throw new HibernateException(e);
-        }
-
-        for(int i = 0; i < libro.getEjemplares().size(); i++){
-            insertEjemplar(libro.getEjemplares().get(i));
         }
     }
 
@@ -51,18 +46,16 @@ public class BibliotecaDAO {
 
         var libros = getAllLibros();
 
-        for (int j = 0 ; j < libros.size() ;j++){
-            int finalJ = j;
-            getAllEjemplaresByLibro(libros.get(j)).forEach((e)->{
-                if(e.getEstado().equals(estado)){
-                    salida.add(libros.get(finalJ));
+        for (Libro libro : libros) {
+            for (Ejemplar ejemplar : libro.getEjemplares()) {
+                if (ejemplar.getEstado().equals(estado)) {
+                    salida.add(libro);
                 }
-            });
-
+            }
         }
+
+
         return salida;
-
-
     }
 
     public void printInfo () {
@@ -72,15 +65,21 @@ public class BibliotecaDAO {
         for (int i = 0 ; i < libros.size() ; i++){
             System.out.println("Libro: " + libros.get(i).getTitulo());
             System.out.println("Autor: " + libros.get(i).getAutor());
-            System.out.println("Ejemplares: ");
-            getAllEjemplaresByLibro(libros.get(i)).forEach((e)->{
-                System.out.println("Estado: " + e.getEstado() + " Edicion: " + e.getEdicion());
-            });
+            System.out.println("");
+
+            var ejemplares = libros.get(i).getEjemplares();
+
+            if (ejemplares != null)     System.out.println("Ejemplares: ");
+
+            for (int j = 0 ; j < ejemplares.size() ; j++){
+                System.out.println("Ejemplar número "+ (j+1));
+                System.out.println("Estado: " + ejemplares.get(j).getEstado());
+                System.out.println("Edición: " + ejemplares.get(j).getEdicion());
+                System.out.println("");
+            }
+            System.out.println("-------------------------------------------------");
         }
-
     }
-
-
 
     public ArrayList<Libro> getAllLibros () {
 
@@ -92,27 +91,7 @@ public class BibliotecaDAO {
         }
     }
 
-    public ArrayList<Ejemplar> getAllEjemplaresByLibro (Libro libro) {
 
-        try (var s = sessionFactory.openSession()) {
-            var q = s.createQuery("from Ejemplar where Ejemplar.libro = :id", Ejemplar.class);
-            q.setParameter("id", libro.getId());
-            return (ArrayList<Ejemplar>) q.list();
-        } catch (HibernateException e) {
-            throw new HibernateException(e);
-        }
-    }
-
-    public void insertEjemplar (Ejemplar ejemplar) {
-        try (var s = sessionFactory.openSession()) {
-            Transaction t = s.beginTransaction();
-            s.persist(ejemplar);
-            t.commit();
-            close();
-        } catch (HibernateException e) {
-            throw new HibernateException(e);
-        }
-    }
     public void close() {
         sessionFactory.close();
     }

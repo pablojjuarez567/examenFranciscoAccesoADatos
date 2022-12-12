@@ -21,12 +21,10 @@ public class Libro implements Serializable {
     @Basic
     @Column(name = "autor")
     private String autor;
-    @OneToMany (mappedBy = "libro", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "libro", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
 
-    /*
-    Completar con los métodos y atributos que sean necesarios
-    */    
+
     
     public Libro() {
     }
