@@ -1,6 +1,8 @@
 package com.cesur.examenaddicc22;
 
 import dao.BibliotecaDAO;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import models.Ejemplar;
 import models.Libro;
@@ -25,18 +27,26 @@ class Ejercicio3 {
     static void solucion() {
         
         var daoh = new BibliotecaDAO();
-        
+
         var ej1 = new Ejemplar("bueno",2018);
         var ej2 = new Ejemplar("mal",2019);
         var ej3 = new Ejemplar("excelente",2021);
         
         Libro libro = new Libro();
         libro.setTitulo("Aprende Java en 24h");
-        libro.setTitulo("Rafael Montes");
+        libro.setAutor("Rafael Montes");
+
+        ej1.setLibro(libro);
+        ej2.setLibro(libro);
+        ej3.setLibro(libro);
+
+        var ejemplares = new ArrayList<Ejemplar>();
+        ejemplares.add(ej1);
+        ejemplares.add(ej2);
+        ejemplares.add(ej3);
+        libro.setEjemplares(ejemplares);
         
-        /* aqui faltaría asociar los ejemplares a este libro */
-        
-        daoh.saveLibro(libro);        
+        daoh.saveLibro(libro);
         daoh.printInfo();
         
         System.out.println("\nEstos son los libros que tienen algun ejemplar en buen estado");

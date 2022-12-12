@@ -12,7 +12,7 @@ class Ejercicio2 {
      * Queremos gestionar una pequeña biblioteca compartida usando una base
      * de datos MySQL gestionada por un programa en Java (se adjunta el script
      * de creación de la base de datos). Completa los métodos que aparecen en
-     * la clase UsuarioDAO para gestionar el listado de usuarios de la miama,
+     * la clase UsuarioDAO para gestionar el listado de usuarios de la misma,
      * usando exclusivamente JDBC.
      * 
      * Exclusivamente modificar la clase UsuarioDAO

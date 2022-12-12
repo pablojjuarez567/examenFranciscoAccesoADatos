@@ -1,31 +1,36 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Usuario;
 
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
+
 public class UsuarioDAO {
     
     private Connection connection;
     
-    /* Completar consultas */
-    static final String INSERT_QUERY ="";
-    static final String LIST_QUERY="";
-    static final String GET_BY_DNI="";
-    
-    
+    static final String INSERT_QUERY ="INSERT INTO usuario (nombre, apellidos, dni) VALUES (?,?,?)";
+    static final String LIST_QUERY="SELECT * FROM usuario";
+    static final String GET_BY_DNI="SELECT * FROM usuario WHERE dni=?";
+
+    static final String URL = "jdbc:mysql://localhost:3306/examen";
+    static final String USER = "root";
+    static final String PASSWORD = "root";
+
+
     public void connect(){
         try {
-            
-            /* completar código de conexión */
-            
-            System.out.println("Base de datos no conectada");
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            Logger.getLogger(UsuarioDAO.class.getName()).info("Conexión establecida con exito");
         }catch(Exception ex){
             System.out.println("Error al conectar a la base de datos");
-            System.out.println("ex");
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }     
     }
     
@@ -39,26 +44,31 @@ public class UsuarioDAO {
     
     public void save(Usuario user){
         
-        /**
-         * Completar código para guardar un usuario 
-         * Este método no debe generar el id del usuario, ya que la base
-         * de datos es la que lo genera.
-         * Una vez obtenido el id del usuario tras la consulta sql,
-         * hay que modificarlo en el objeto que se pasa como parámetro 
-         * de forma que pase a tener el id correcto.
-         */
+        try (var pst = connection.prepareStatement(INSERT_QUERY, RETURN_GENERATED_KEYS)) {
 
-        System.out.println("Método save no completado");
+            pst.setString(1, user.getNombre());
+            pst.setString(2, user.getApellidos());
+            pst.setString(3, user.getDni());
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
     public ArrayList<Usuario> list(){
 
         var salida = new ArrayList<Usuario>(0);
-        
-        /* Completar código para devolver un arraylist con todos los usuarios */
-        
-        System.out.println("Método list no completado");
+
+        try (var pst = connection.prepareStatement(LIST_QUERY)) {
+
+            ResultSet result = pst.executeQuery();
+            while (result.next()) salida.add(construirAlumno(result));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         return salida;
     }    
@@ -66,14 +76,36 @@ public class UsuarioDAO {
     public Usuario getByDNI(String dni){
         
         Usuario salida = new Usuario();
-        
-        /**
-         * Completar código para devolver el usuario que tenga ese dni.
-         * Si no existe, se debe devolver null
-         */
-        
-        System.out.println("Método getByDNI no completado");
+
+        try (var pst = connection.prepareStatement(GET_BY_DNI)) {
+
+            pst.setString(1, dni);
+
+            ResultSet result = pst.executeQuery();
+
+            if (result.next()) return construirAlumno(result);
+            else return null;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         return salida;
-    }    
+    }
+
+
+    public Usuario construirAlumno(ResultSet result) {
+        Usuario usuario = new Usuario();
+
+        try {
+            usuario.setId(result.getLong("id"));
+            usuario.setNombre(result.getString("nombre"));
+            usuario.setApellidos(result.getString("apellidos"));
+            usuario.setDni(result.getString("dni"));
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return usuario;
+    }
 }
